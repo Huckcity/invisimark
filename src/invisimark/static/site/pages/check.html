@@ -1,0 +1,33 @@
+<section class="hero">
+  <h1>Check if a file is marked as AI-generated</h1>
+  <p class="lead">Upload an image or video. This looks for two things: the Invisimark AI watermark, and signed C2PA metadata from any provider.</p>
+  <ul class="points">
+    <li><b>Free, no account.</b> Files up to {{max_mb}} MB.</li>
+    <li><b>Your file is not kept.</b> It is deleted as soon as the check ends. <a href="/privacy">What is kept</a>.</li>
+    <li><b>No mark doesn't mean human-made.</b> Marks can be missing or removed, and other providers' watermarks can't be read here.</li>
+  </ul>
+</section>
+
+<section id="tool" class="tool" aria-label="Check a file for AI marks">
+  <div class="card">
+    <form id="check-form" autocomplete="off">
+      <label for="check-file">Image or video to check</label>
+      <p class="hint">PNG, JPG, WebP, MP4, MOV, MKV or WebM. Use the version closest to the original: sharing sites often remove metadata.</p>
+      <input id="check-file" name="file" type="file" accept="image/*,video/*,.mkv" required>
+      <p class="filemeta" id="check-filemeta" hidden></p>
+      <button class="go" type="submit">Check this file</button>
+    </form>
+    <div class="status" id="check-status" hidden aria-live="polite">
+      <div class="bar"><i></i></div><p class="stage"></p>
+    </div>
+    <p class="error" id="check-error" role="alert" hidden></p>
+    <div class="result" id="check-result" hidden aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>What the result means</h2>
+  <p><b>Watermark.</b> The public Invisimark watermark says a tool marked the file as AI-generated or AI-manipulated. It doesn't say who marked it. Anyone can copy it onto another file or remove it.</p>
+  <p><b>Signed metadata.</b> A C2PA manifest can name who signed the file and whether it was declared AI-made. A valid signature shows the manifest is unchanged. The name is only verified if the certificate chains to a trust list this service has loaded.</p>
+  <p>Developers can read <a href="/eu-ai-act-marking">how to mark AI output this way</a>.</p>
+</section>

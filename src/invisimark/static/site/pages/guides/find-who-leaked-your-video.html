@@ -1,0 +1,50 @@
+<article class="prose guide">
+  <p class="crumbs"><a href="/guides">Guides</a> &rsaquo; Find who leaked your video</p>
+  <h1>How to find out who leaked your video</h1>
+  <p class="lead">If you sent the same video to several people and a copy turns up where it should not be, you usually cannot tell who passed it on. This is what actually helps, and what a result can and cannot tell you.</p>
+
+  <h2>Why identical copies are the problem</h2>
+  <p>When everyone has the same file, a leak points at nobody in particular. You can ask around, but people who did nothing wrong are indistinguishable from the one who did, and the one who did has no reason to say so.</p>
+
+  <h2>Why a visible watermark is not enough</h2>
+  <p>A username or logo across the picture deters casual sharing, but it can be cropped out, blurred, covered or edited away, and the person leaking can see it before they do. It also changes how your work looks. A visible mark is a sign that says "I know who you are". It is not evidence of who actually shared the file once it has been altered.</p>
+
+  <h2>What works: a different invisible mark in every copy</h2>
+  <p>Give each recipient a copy that looks identical to everyone else's but carries its own faint pattern, woven into the texture of the picture. Nobody can point at it, and it survives the things that happen to files in the wild: recompression, resizing, cropping, mirroring, colour changes and screen recordings. When a copy leaks, you look for the pattern in it and compare it with the one each recipient was given.</p>
+
+  <h2>Step by step with Invisimark</h2>
+  <ol>
+    <li><a href="/">Upload your original</a> (the full-size file, not a thumbnail) and type one name per recipient: a username, an order number, anything you will recognise later.</li>
+    <li>Download the zip. It holds one folder per person and a case file, <code>invisimark-case.json</code>. The case file contains the secret key. This site does not keep it.</li>
+    <li>Send each person only their own copy. Tell them their copy is individually marked: that alone discourages most leaks.</li>
+    <li>Keep the case file somewhere safe. Without it a leak cannot be traced, and anyone who has it can make accusations look convincing.</li>
+    <li>If a copy turns up, <a href="/">upload it with the case file</a> on the Trace tab.</li>
+  </ol>
+
+  <h2>How to read the result</h2>
+  <ul>
+    <li><strong>Traced to a name.</strong> One recipient's pattern is there, far stronger than chance would allow, and nobody else's is. For video you are shown the odds of an unrelated recipient matching this well by luck.</li>
+    <li><strong>A weak lead.</strong> One recipient stands out, but not enough to name them. A reason to look closer, not a reason to accuse. More leaked footage would settle it.</li>
+    <li><strong>Nobody can be named.</strong> Either the mark is there but the file was changed too much, or the file did not come from these copies. That is not proof of innocence.</li>
+  </ul>
+  <p>A match is evidence, not proof. Check it against how and when you sent each copy: someone may have passed their copy on, or their account may have been compromised.</p>
+
+  <h2>How much leaked footage you need</h2>
+  <p>Photos are read as a whole. Videos are cut into short segments, from one to five seconds depending on the video's length, and each recipient's copy follows its own pattern from segment to segment. To name one person with confidence you need roughly 25 to 30 clear segments from the leak. For a long original that is about two minutes of leaked footage. For a short clip, about half a minute. A shorter leak gives a lead or nothing, and the result says so rather than guessing.</p>
+
+  <h2>What can defeat it</h2>
+  <ul>
+    <li><strong>Flat or dark footage.</strong> Slides, screencasts, cartoon shading and black backgrounds carry less. The tool tells you when your file is like this. Such copies still trace when shared as they are or lightly recompressed, but not after heavy recompression.</li>
+    <li><strong>A phone filming a screen</strong>, AI upscaling or "enhance" passes, and frame interpolation.</li>
+    <li><strong>Someone who knows it is there.</strong> Strong noise plus blur, or averaging copies from several recipients together, damages the mark. Treat it as deterrence plus evidence, not a lock.</li>
+    <li><strong>Small pictures and heavy crops.</strong> Always mark the original at full size.</li>
+  </ul>
+
+  <h2>Before you send anything</h2>
+  <ul>
+    <li>Mark the original, once per batch of recipients, and keep a note of who got which label.</li>
+    <li>Keep the case file private and backed up. It is the only copy of the key.</li>
+    <li>Send each person only their own file. A shared link to one copy makes everyone who opens it the same recipient.</li>
+  </ul>
+  <p class="cta"><a class="btn primary" href="/">Mark your files, free</a></p>
+</article>

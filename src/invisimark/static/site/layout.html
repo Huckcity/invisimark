@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+{{canonical_tag}}
+{{robots_meta}}
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#b4381f">
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<meta property="og:site_name" content="Invisimark">
+<meta property="og:type" content="{{og_type}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{canonical}}">
+<meta property="og:image" content="{{base}}/static/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Invisimark: find out who leaked it">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{title}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="twitter:image" content="{{base}}/static/og.png">
+<link rel="stylesheet" href="/static/style.css">
+{{jsonld}}
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap bar-row">
+    <a class="brand" href="/" aria-label="Invisimark home">
+      <svg class="logo" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><circle cx="16" cy="9.5" r="3.2" fill="#fff"/><circle cx="16" cy="9.5" r="5.6" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="1.6 2.2" opacity=".75"/><rect x="13.4" y="15.5" width="5.2" height="11" rx="1.6" fill="#fff"/></svg>
+      <span>invisi<b>mark</b></span>
+    </a>
+    <nav aria-label="Main">
+      <a href="/#tool"{{nav_tool}}>Mark or trace</a>
+      <a href="/check"{{nav_check}}>Check for AI marks</a>
+      <a href="/eu-ai-act-marking"{{nav_ai}}>For AI apps</a>
+      <a href="/about"{{nav_about}}>How it works</a>
+      <a href="/guides"{{nav_guides}}>Guides</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+{{ad_top}}
+{{content}}
+{{ad_bottom}}
+</main>
+<footer class="site">
+  <div class="wrap foot">
+    <div>
+      <p class="foot-brand">invisi<b>mark</b></p>
+      <p class="muted">Find out who leaked it. Free invisible watermarks for photos and video.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="/">Mark or trace</a>
+      <a href="/check">Check for AI marks</a>
+      <a href="/eu-ai-act-marking">For AI apps</a>
+      <a href="/about">How it works</a>
+      <a href="/guides">Guides</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <span>Report abuse: {{contact_link}}</span>
+    </nav>
+  </div>
+</footer>
+{{scripts}}
+</body>
+</html>

@@ -1,0 +1,36 @@
+[project]
+name = "invisimark"
+version = "0.2.0"
+description = "Invisible watermarks for images and video: trace which copy leaked, or mark AI-generated output for anyone to check."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Adam Gibbons", email = "adam.p.gibbons@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "c2pa-python==0.38.1",
+    "cryptography>=44",
+    "numpy>=2.5.3",
+    "opencv-python-headless>=5.0.0.93",
+    "python-multipart>=0.0.32",
+    "scipy>=1.18.1",
+    "starlette>=1.7.0",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+invisimark = "invisimark.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pooch>=1.9.0",
+    "pytest>=9.1.1",
+    "scikit-image>=0.26.0",
+]

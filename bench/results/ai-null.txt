@@ -1,0 +1,6 @@
+768 unmarked image variants, 24 source images, 2026-10-31.
+False positives: 0 []
+Upper 95% bound on the false-positive rate (rule of three when none were seen): 0.39%
+alignment score: mean 5.58, sd 0.37, max 6.81 (a mark needs 8.0)
+id score, which does not decide anything: mean 3.51, sd 2.64, max 6.79
+Note: variants of one photograph are not independent, so the true sample is smaller than the count suggests.

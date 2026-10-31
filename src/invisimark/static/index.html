@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>invisimark</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --panel: #ffffff; --ink: #1d1d1b; --muted: #5d5b55; --line: #dedbd2;
+    --accent: #b4381f; --accent-ink: #ffffff; --ok: #1f7a4d; --warn: #9a6200; --bad: #b4381f; --bar: #d9d5c9;
+    --focus: #1b5fd1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #151513; --panel: #1f1f1c; --ink: #f1efe8; --muted: #a8a59a; --line: #34332e;
+      --accent: #e8664a; --accent-ink: #1a0c08; --ok: #54c58a; --warn: #e2a63b; --bad: #ff7b61; --bar: #3a3934;
+      --focus: #7aa7ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 880px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  h1 { font-size: 28px; letter-spacing: -0.02em; margin: 0; }
+  h1 span { color: var(--accent); }
+  .tag { color: var(--muted); margin: 0; }
+  h2 { font-size: 19px; margin: 0 0 4px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-top: 20px; }
+  .sub { color: var(--muted); margin: 0 0 16px; font-size: 15px; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 6px; }
+  textarea, select { width: 100%; font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 10px 12px; }
+  textarea { min-height: 96px; resize: vertical; }
+  .drop { border: 2px dashed var(--line); border-radius: 10px; padding: 22px 12px; text-align: center; cursor: pointer;
+    color: var(--muted); background: var(--bg); transition: border-color .15s, background .15s; }
+  .drop:hover, .drop.over { border-color: var(--accent); }
+  .drop strong { color: var(--ink); overflow-wrap: anywhere; }
+  .drop input { display: none; }
+  button { font: inherit; font-weight: 600; min-height: 44px; padding: 0 20px; border-radius: 8px; border: 0; cursor: pointer;
+    background: var(--accent); color: var(--accent-ink); margin-top: 16px; }
+  button.secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); margin-top: 0; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+  .progress { height: 8px; background: var(--bar); border-radius: 4px; overflow: hidden; margin: 14px 0 6px; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  .stage { color: var(--muted); font-size: 14px; min-height: 21px; }
+  .notice { border-left: 4px solid var(--line); padding: 8px 12px; margin: 14px 0; background: var(--bg); border-radius: 0 8px 8px 0; }
+  .notice.ok { border-color: var(--ok); } .notice.warn { border-color: var(--warn); } .notice.bad { border-color: var(--bad); }
+  .verdict { font-size: 22px; font-weight: 700; margin: 4px 0; }
+  .verdict.ok { color: var(--ok); } .verdict.warn { color: var(--warn); } .verdict.bad { color: var(--bad); }
+  ul.plain { list-style: none; margin: 8px 0 0; padding: 0; }
+  ul.plain li { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); flex-wrap: wrap; }
+  ul.plain li:first-child { border-top: 0; }
+  ul.plain .grow { flex: 1; min-width: 120px; overflow-wrap: anywhere; }
+  a.btn { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 8px; text-decoration: none;
+    border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: 14px; }
+  a.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .bar { position: relative; height: 10px; background: var(--bar); border-radius: 5px; flex: 2; min-width: 120px; }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 5px; }
+  .bar b { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--ink); }
+  .mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+  th { color: var(--muted); font-weight: 600; }
+  details summary { cursor: pointer; font-weight: 600; }
+  #issue-out, #trace-out { margin-top: 18px; }
+  .hidden { display: none; }
+  footer { color: var(--muted); font-size: 14px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>invisi<span>mark</span></h1>
+    <p class="tag">Find out which copy leaked.</p>
+  </header>
+
+  <div id="keybox" class="notice warn hidden">
+    <strong>Create your key first.</strong> It decides every mark, and it stays on this computer. Back it up: without it, copies you
+    have issued can no longer be traced.
+    <div><button id="mkkey" type="button">Create key</button></div>
+  </div>
+
+  <section class="card" aria-labelledby="h-issue">
+    <h2 id="h-issue">Mark a copy for each recipient</h2>
+    <p class="sub">Each person gets a file that looks identical to the original but carries a mark only you can read.</p>
+    <div class="drop" id="drop-issue" tabindex="0" role="button" aria-label="Choose the file to mark">
+      <input type="file" id="file-issue" accept="video/*,image/*">
+      <span id="name-issue">Drop a video or image here, or click to choose</span>
+    </div>
+    <div class="row">
+      <div>
+        <label for="recipients">Recipients, one per line</label>
+        <textarea id="recipients" placeholder="alice&#10;bob_42&#10;order-1093"></textarea>
+      </div>
+      <div>
+        <label for="strength">Strength</label>
+        <select id="strength">
+          <option value="auto" selected>Auto (recommended)</option>
+          <option value="subtle">Subtle</option>
+          <option value="standard">Standard</option>
+          <option value="strong">Strong</option>
+        </select>
+        <p class="sub" style="margin-top:8px">Auto finds the weakest mark that survives recompression, downscaling and screen capture, by testing your file first. It takes a minute or two for video.</p>
+      </div>
+    </div>
+    <button id="go-issue" type="button" disabled>Make marked copies</button>
+    <div id="issue-out" aria-live="polite"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-trace">
+    <h2 id="h-trace">Trace a leaked file</h2>
+    <p class="sub">Works on re-encoded, resized, cropped, mirrored or screen-recorded copies. It compares against everyone in your ledger.</p>
+    <div class="drop" id="drop-trace" tabindex="0" role="button" aria-label="Choose the leaked file">
+      <input type="file" id="file-trace" accept="video/*,image/*">
+      <span id="name-trace">Drop the leaked file here, or click to choose</span>
+    </div>
+    <label for="extra">Also check these names (optional, one per line)</label>
+    <textarea id="extra" style="min-height:64px" placeholder="Names that are not in the ledger yet"></textarea>
+    <button id="go-trace" type="button" disabled>Trace it</button>
+    <div id="trace-out" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <details id="ledger-box">
+      <summary>Ledger of issued copies</summary>
+      <div id="ledger" class="sub" style="margin-top:12px">Nothing issued yet.</div>
+    </details>
+  </section>
+
+  <footer>
+    A match is evidence, not proof. Only mark files you have the right to share, and tell recipients their copy is marked.
+    See the README for what this can and cannot survive.
+  </footer>
+</main>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, props = {}, ...kids) => {
+    const n = Object.assign(document.createElement(tag), props);
+    for (const k of kids) n.append(k);
+    return n;
+  };
+  const api = async (path, opts = {}) => {
+    const res = await fetch(path, { credentials: "same-origin", ...opts });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(body.detail || res.statusText);
+    return body;
+  };
+
+  function wireDrop(dropId, inputId, nameId, onPick) {
+    const drop = $(dropId), input = $(inputId);
+    const pick = (file) => { if (!file) return; $(nameId).replaceChildren(el("strong", { textContent: file.name })); onPick(file); };
+    drop.addEventListener("click", () => input.click());
+    drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); } });
+    input.addEventListener("change", () => pick(input.files[0]));
+    drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+    drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+    drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); pick(e.dataTransfer.files[0]); });
+  }
+
+  let issueFile = null, traceFile = null, hasKey = false;
+  const refreshButtons = () => {
+    $("go-issue").disabled = !(hasKey && issueFile && $("recipients").value.trim());
+    $("go-trace").disabled = !(hasKey && traceFile);
+  };
+  wireDrop("drop-issue", "file-issue", "name-issue", (f) => { issueFile = f; refreshButtons(); });
+  wireDrop("drop-trace", "file-trace", "name-trace", (f) => { traceFile = f; refreshButtons(); });
+  $("recipients").addEventListener("input", refreshButtons);
+
+  async function status() {
+    const s = await api("/api/status");
+    hasKey = s.key;
+    $("keybox").classList.toggle("hidden", s.key);
+    refreshButtons();
+    const rows = await api("/api/ledger");
+    if (rows.length) {
+      const table = el("table", {}, el("thead", {}, el("tr", {}, ...["When", "Recipient", "File", "Strength"].map((h) => el("th", { textContent: h })))));
+      const body = el("tbody");
+      for (const r of rows) {
+        body.append(el("tr", {}, el("td", { textContent: (r.ts || "").replace("T", " ").slice(0, 16) }), el("td", { textContent: r.recipient }),
+          el("td", { textContent: r.output || r.master || "" }), el("td", { className: "mono", textContent: r.strength != null ? Number(r.strength).toFixed(2) : "" })));
+      }
+      table.append(body);
+      $("ledger").replaceChildren(table);
+    }
+  }
+  $("mkkey").addEventListener("click", async () => { try { await api("/api/key", { method: "POST" }); await status(); } catch (e) { alert(e.message); } });
+
+  async function runJob(startPath, form, out, button) {
+    button.disabled = true;
+    const bar = el("i"), stage = el("div", { className: "stage", textContent: "Uploading ..." });
+    out.replaceChildren(el("div", { className: "progress" }, bar), stage);
+    try {
+      let job = await api(startPath, { method: "POST", body: form });
+      while (job.status === "queued" || job.status === "running") {
+        stage.textContent = job.stage.charAt(0).toUpperCase() + job.stage.slice(1) + " ...";
+        bar.style.width = Math.max(4, job.progress * 100) + "%";
+        await new Promise((r) => setTimeout(r, 800));
+        job = await api("/api/jobs/" + job.id);
+      }
+      if (job.status === "error") throw new Error(job.error || "failed");
+      bar.style.width = "100%";
+      return job;
+    } finally {
+      button.disabled = false;
+      refreshButtons();
+    }
+  }
+
+  $("go-issue").addEventListener("click", async () => {
+    const out = $("issue-out"), form = new FormData();
+    form.append("file", issueFile); form.append("recipients", $("recipients").value); form.append("strength", $("strength").value);
+    try {
+      const job = await runJob("/api/issue", form, out, $("go-issue"));
+      const kids = [];
+      const cal = job.result.calibration;
+      if (cal) {
+        kids.push(el("div", { className: "notice " + (cal.robust ? "ok" : "warn") },
+          el("strong", { textContent: cal.robust ? "Robust mark. " : "Weak mark. " }),
+          cal.robust ? "It held up against recompression, downscaling and screen capture."
+                     : "This picture is too flat or dark to carry a mark that survives heavy mangling without showing. Copies are traceable when shared as they are or lightly recompressed.",
+          el("div", { className: "mono", textContent: cal.summary })));
+      }
+      const list = el("ul", { className: "plain" });
+      for (const c of job.result.copies) {
+        list.append(el("li", {}, el("span", { className: "grow", textContent: c.recipient }),
+          el("a", { className: "btn", href: `/api/jobs/${job.id}/files/${encodeURIComponent(c.file)}`, textContent: "Download" })));
+      }
+      kids.push(list);
+      if (job.result.copies.length > 1) kids.push(el("p", {}, el("a", { className: "btn primary", href: `/api/jobs/${job.id}/zip`, textContent: "Download all (zip)" })));
+      out.replaceChildren(...kids);
+      await status();
+    } catch (e) { out.replaceChildren(el("div", { className: "notice bad", textContent: e.message })); }
+  });
+
+  $("go-trace").addEventListener("click", async () => {
+    const out = $("trace-out"), form = new FormData();
+    form.append("file", traceFile); form.append("candidates", $("extra").value);
+    try {
+      const job = await runJob("/api/trace", form, out, $("go-trace"));
+      const r = job.result, kids = [];
+      if (!r.marked) {
+        kids.push(el("div", { className: "verdict bad", textContent: "No mark from your key found" }),
+          el("p", { className: "sub", textContent: "Either this file was not made from one of your copies, or it was changed too much (heavy blur, tiny crop, very short clip). Absence of a mark is not proof it is clean." }));
+      } else if (r.verdict) {
+        kids.push(el("div", { className: "verdict ok", textContent: "Traced to " + r.verdict }));
+      } else if (!r.candidates) {
+        kids.push(el("div", { className: "verdict warn", textContent: "Your mark is present" }),
+          el("p", { className: "sub", textContent: "There is nobody to compare against yet. Issue copies first, or list names under “Also check these names”." }));
+      } else if (r.lead) {
+        kids.push(el("div", { className: "verdict warn", textContent: "Weak lead: " + r.lead }),
+          el("p", { className: "sub", textContent: "This name scores clearly above the others but not high enough to be named. Treat it as a hint to investigate, not as evidence." }));
+      } else {
+        kids.push(el("div", { className: "verdict warn", textContent: "Marked, but no one stands out" }),
+          el("p", { className: "sub", textContent: "Do not accuse anyone on this evidence. The leaker may not be on your list, or the copy was changed too much to tell recipients apart." }));
+      }
+      if (r.matches.length) {
+        const max = Math.max(r.threshold * 1.6, ...r.matches.map((m) => m.z));
+        const list = el("ul", { className: "plain" });
+        for (const m of r.matches) {
+          const bar = el("div", { className: "bar" }, el("i", { style: `width:${Math.max(1, Math.min(100, (m.z / max) * 100))}%` }),
+            el("b", { style: `left:${(r.threshold / max) * 100}%`, title: "needed to name someone" }));
+          list.append(el("li", {}, el("span", { className: "grow", textContent: m.recipient }), bar, el("span", { className: "mono", textContent: m.z.toFixed(1) })));
+        }
+        kids.push(list, el("p", { className: "sub", textContent: `The line marks the score needed to name someone among ${r.candidates} candidate${r.candidates === 1 ? "" : "s"} (${r.threshold}).` }));
+      }
+      kids.push(el("p", { className: "sub mono", textContent: `sync ${r.sync_z}, scale x${r.scale}${r.mirrored ? ", flipped or rotated" : ""}` }));
+      out.replaceChildren(...kids);
+    } catch (e) { out.replaceChildren(el("div", { className: "notice bad", textContent: e.message })); }
+  });
+
+  status().catch((e) => { document.body.prepend(el("div", { className: "notice bad", textContent: e.message })); });
+})();
+</script>
+</body>
+</html>

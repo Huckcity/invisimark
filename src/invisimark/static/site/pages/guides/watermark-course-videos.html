@@ -1,0 +1,41 @@
+<article class="prose guide">
+  <p class="crumbs"><a href="/guides">Guides</a> &rsaquo; Watermarking course videos</p>
+  <h1>Watermarking paid course videos, per student</h1>
+  <p class="lead">Course piracy usually starts with one paying student. If every student's copy carries its own invisible mark, a pirated lesson can be traced back to the account it came from.</p>
+
+  <h2>Where this fits, and where it does not</h2>
+  <p>Most course platforms stream video and cannot serve a different file to each student, so for streamed lessons you are limited to what the platform offers, typically a visible username overlay and DRM. Per-student files make sense wherever you hand over <em>files</em>: downloadable lessons, workshop and coaching recordings, private links to a unique file, bonus material in a zip, and pre-release cuts.</p>
+
+  <h2>Why it is normally too expensive, and the fix</h2>
+  <p>Putting a robust mark into video costs roughly one real-time render per recipient. For 40 ten-minute lessons and 300 students that is around two thousand hours of compute. Invisimark does it differently: each lesson is rendered twice, as version A and version B, in short segments. Each student's copy takes every segment from A or from B according to a pattern derived from the student, and the segments are joined without re-encoding. Making a student's copy takes a file concatenation, so the cost depends on the lesson, not on how many students there are.</p>
+  <p>To trace a leak, each segment of the leaked file is read as A or B, and the result is compared with every student's pattern. Segments that cannot be read count for nothing instead of voting wrongly, and two students who share or swap segments both stand out.</p>
+
+  <h2>What to expect on course footage</h2>
+  <p>Screen recordings and slides are the weak case for any invisible mark, because there is little texture to hide it in. Invisimark measures this on your own file and warns you. In our own test, a four-minute screen recording marked for six students was traced to the right student:</p>
+  <ul>
+    <li>as delivered, with odds of an unrelated student matching by luck of about 1 in 50 trillion;</li>
+    <li>after recompression (x264 at quality 28), still named, at odds of about 1 in 3 to 10 billion;</li>
+    <li>after a 12 second cut from the start, named when the cut was entered;</li>
+    <li>after heavy recompression (quality 34), a weak lead on the right student, not a name;</li>
+    <li>with the real leaker missing from the list, nobody was named.</li>
+  </ul>
+  <p>That is one clip and six students, so read it as a sketch, not a guarantee for your material.</p>
+
+  <h2>A practical workflow</h2>
+  <ol>
+    <li>Export each lesson from your editor at full size.</li>
+    <li>On the <a href="/">tool</a>, upload one lesson and list your students, one label per line (an order number or email, as you will recognise it later).</li>
+    <li>Download the zip and the case file. Send each student their folder. Keep one case file per lesson, private and backed up.</li>
+    <li>If a lesson appears online, upload the leak and that lesson's case file on the Trace tab. You get a name, a weak lead, or an honest "cannot tell".</li>
+  </ol>
+  <p>This free service marks up to about {{max_minutes}} minutes of 1080p video, {{max_mb}} MB and {{max_recipients}} recipients per run. For a whole course, run it lesson by lesson.</p>
+
+  <h2>What it does not do</h2>
+  <ul>
+    <li>It does not stop anyone sharing. It tells you who did, which is what discourages it.</li>
+    <li>It is not DRM and it does not replace your platform's own protections. Use both.</li>
+    <li>A match is evidence, not proof. Tell students that their copy is individually marked, and say so in your terms of sale.</li>
+    <li>A phone filming a screen and AI "enhance" passes are not handled.</li>
+  </ul>
+  <p class="cta"><a class="btn primary" href="/">Mark a lesson, free</a></p>
+</article>

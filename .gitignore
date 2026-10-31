@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+dist/
+.pytest_cache/
+*.egg-info/
+report-key
+invisimark-report-key
+invisimark-dev-cert/
+fly.toml

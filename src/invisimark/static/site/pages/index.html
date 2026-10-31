@@ -1,0 +1,89 @@
+<section class="hero">
+  <h1>Find out who leaked your photo or video</h1>
+  <p class="lead">Give every person their own copy, marked with an invisible pattern only you can read. When a copy turns up where it should not be, upload it here and see whose it was.</p>
+  <ul class="points">
+    <li><b>Free, no account.</b> Photos and videos, up to {{max_recipients}} recipients at a time.</li>
+    <li><b>Your key stays with you.</b> It lives in a case file you download. This site does not store it.</li>
+    <li><b>Evidence, not proof.</b> It tells you when it cannot name anyone. <a href="/about">What it survives and what it does not</a>.</li>
+  </ul>
+</section>
+
+<section id="tool" class="tool" aria-label="Mark copies or trace a leak">
+  <div class="tabs" role="tablist" aria-label="What do you want to do?">
+    <button role="tab" id="tab-mark" aria-controls="panel-mark" aria-selected="true">Mark copies</button>
+    <button role="tab" id="tab-trace" aria-controls="panel-trace" aria-selected="false" tabindex="-1">Trace a leak</button>
+  </div>
+
+  <div class="card" id="panel-mark" role="tabpanel" aria-labelledby="tab-mark">
+    <form id="mark-form" autocomplete="off">
+      <label for="mark-file">Photo or video to share</label>
+      <p class="hint">PNG, JPG, WebP, MP4, MOV, MKV or WebM, up to {{max_mb}} MB. Videos up to about {{max_minutes}} minutes of 1080p.</p>
+      <input id="mark-file" name="file" type="file" accept="image/*,video/*,.mkv" required>
+      <p class="filemeta" id="mark-filemeta" hidden></p>
+
+      <label for="mark-names">Who is getting a copy? One name per line</label>
+      <p class="hint">Any label you will recognise later: a username, an order number. Up to {{max_recipients}}.</p>
+      <textarea id="mark-names" name="recipients" required placeholder="alice&#10;order-1093&#10;bob"></textarea>
+      <p class="filemeta" id="mark-count" hidden></p>
+
+      <button class="go" type="submit">Make marked copies</button>
+    </form>
+    <div class="status" id="mark-status" hidden aria-live="polite">
+      <div class="bar"><i></i></div><p class="stage"></p>
+    </div>
+    <p class="error" id="mark-error" role="alert" hidden></p>
+    <div class="result" id="mark-result" hidden></div>
+  </div>
+
+  <div class="card" id="panel-trace" role="tabpanel" aria-labelledby="tab-trace" hidden>
+    <form id="trace-form" autocomplete="off">
+      <label for="trace-file">The leaked file</label>
+      <p class="hint">The copy you found, as close to what was posted as you can get. A screenshot or a screen recording works but is harder.</p>
+      <input id="trace-file" name="file" type="file" accept="image/*,video/*,.mkv" required>
+      <p class="filemeta" id="trace-filemeta" hidden></p>
+
+      <label for="trace-case">Your case file</label>
+      <p class="hint">The <code>invisimark-case.json</code> you downloaded when you made the copies.</p>
+      <input id="trace-case" name="case" type="file" accept=".json,application/json" required>
+
+      <details>
+        <summary>The leaked video starts later than the original?</summary>
+        <p class="hint">If the beginning was cut off, enter how many seconds are missing. Leave at 0 otherwise.</p>
+        <input id="trace-trim" name="trim" type="number" min="0" step="0.5" value="0" aria-label="Seconds cut from the start">
+      </details>
+
+      <button class="go" type="submit">Find who it came from</button>
+    </form>
+    <div class="status" id="trace-status" hidden aria-live="polite">
+      <div class="bar"><i></i></div><p class="stage"></p>
+    </div>
+    <p class="error" id="trace-error" role="alert" hidden></p>
+    <div class="result" id="trace-result" hidden></div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><span class="n" aria-hidden="true">1</span><div><h3>Upload and list recipients</h3>
+      <p>Choose the photo or video and type who is getting a copy: usernames, order numbers, anything you will recognise later.</p></div></li>
+    <li><span class="n" aria-hidden="true">2</span><div><h3>Send each person their own</h3>
+      <p>Download one folder per recipient and a case file. Every copy looks identical, but each carries a different pattern. Send people only their own copy, and keep the case file private.</p></div></li>
+    <li><span class="n" aria-hidden="true">3</span><div><h3>Trace a leak</h3>
+      <p>When a copy appears somewhere it should not, upload it with your case file. Invisimark reads the pattern and says whose copy it was, or tells you honestly that it cannot.</p></div></li>
+  </ol>
+</section>
+
+<section class="block">
+  <h2>Guides</h2>
+  <div class="cards">
+    <a class="gcard" href="/guides/find-who-leaked-your-video"><h3>How to find out who leaked your video</h3><p>What works, what does not, and what a result means.</p></a>
+    <a class="gcard" href="/guides/watermark-course-videos"><h3>Watermarking paid course videos</h3><p>Per-student copies without re-rendering for every student.</p></a>
+    <a class="gcard" href="/guides/invisible-vs-visible-watermarks"><h3>Invisible vs visible watermarks</h3><p>When a logo is enough and when it is not.</p></a>
+  </div>
+</section>
+
+<section class="block faq" id="faq">
+  <h2>Questions</h2>
+  {{faq}}
+</section>

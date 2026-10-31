@@ -1,0 +1,8 @@
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+bench/results
+tests
+docs
+dist

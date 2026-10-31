@@ -1,0 +1,48 @@
+<article class="prose">
+  <h1>Mark AI images and video for EU AI Act Article 50</h1>
+  <p class="lead">Article 50(2) requires generative AI output to be marked in a machine-readable way and to be detectable as AI-made. Invisimark is an open-source tool for image and video apps that adds two marks and gives people a free way to check them.</p>
+
+  <h2>Who this is for</h2>
+  <p>Small teams shipping an image or video generator. The EU's voluntary Code of Practice on Transparency of AI-Generated Content says providers may rely on third-party or upstream marking, but that this doesn't remove their own responsibility. If your model provider marks its output, check whether that covers what your app actually delivers.</p>
+  <p>Reported timing: systems on the market before 2 August 2026 have until 2 December 2026 to meet the marking duty, and newer systems must meet it from launch. This comes from law-firm summaries of the Digital Omnibus on AI, so confirm it against the regulation's text.</p>
+
+  <h2>What it does</h2>
+<pre><code>invisimark mark output.png marked.png \
+  --cert chain.pem --signing-key key.pem \
+  --provider "Your Company" --system "Your App"
+
+invisimark check marked.png</code></pre>
+  <ul>
+    <li><b>An imperceptible watermark</b> from a published key, so anyone can check for it without asking you.</li>
+    <li><b>A signed, time-stamped C2PA manifest</b> that declares the file AI-generated or AI-manipulated and keeps any provenance already on it.</li>
+    <li><b>A detector</b> you can run yourself, as a library or command, or point people to: <a href="/check">the free public checker</a>. It explains results in plain language, says which mark each one rests on, and can give a signed result.</li>
+    <li><b>A public specification</b> of the watermark, so others can build their own detector.</li>
+  </ul>
+
+  <h2>How it maps to the Code of Practice</h2>
+  <table>
+    <thead><tr><th scope="col">Measure</th><th scope="col">Covered</th><th scope="col">Not covered</th></tr></thead>
+    <tbody>
+      <tr><td>1.1 Two marking layers</td><td>Signed metadata and a watermark, for images and video</td><td>Audio and text. You need your own signing certificate</td></tr>
+      <tr><td>1.2 Keeping existing marks</td><td>An input's C2PA manifest is carried forward as an ingredient</td><td>Other providers' watermarks are not detected</td></tr>
+      <tr><td>2.1 Detection</td><td>Free software, a public specification and a hosted checker with signed results</td><td>You still have to offer detection to your own users</td></tr>
+      <tr><td>2.3 Clear results</td><td>Plain-language results, labelled by mark type</td><td>A formal accessibility audit has not been done</td></tr>
+      <tr><td>3.2, 3.3 Reliability and robustness</td><td>Published benchmarks for everyday changes and for deliberate attacks</td><td>Deliberate removal and copying succeed, as listed below</td></tr>
+      <tr><td>4 Compliance process</td><td>A log of marked files, and benchmarks you can rerun</td><td>Your compliance process, training and dealings with authorities</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Limits you should know</h2>
+  <ul>
+    <li><b>Deliberate removal:</b> anyone can subtract the public mark almost perfectly, because its key is published. It holds up against accidental changes, not against someone determined.</li>
+    <li><b>Copying:</b> the mark can be moved onto another file, and an optional private tile moves with it. So it says "marked as AI", not who made the file. Only the signed metadata shows origin, for as long as it stays on the file.</li>
+    <li><b>Geometry:</b> tilts up to about 15 degrees and stretching one axis are recovered. Larger tilts, a tilt combined with a large resize, and scaling both axes differently are not.</li>
+    <li><b>Video:</b> it handles 8-bit SDR video, and flat or dark footage carries the mark less well.</li>
+    <li><b>Test data:</b> the benchmarks use natural photographs, not model output, and no real regeneration through a model has been tried.</li>
+  </ul>
+
+  <h2>This isn't legal advice</h2>
+  <p>Using Invisimark doesn't make you compliant by itself. The Code of Practice is voluntary, the law doesn't name a method, and you remain responsible for your own system. Ask a lawyer about your own position.</p>
+
+  <p>{{source_link}}</p>
+</article>
